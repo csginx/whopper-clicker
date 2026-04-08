@@ -137,7 +137,7 @@ footer {
     z-index: 10;
 }
 
-h1 {
+.score-display {
     font-size: 4rem;
     font-weight: 900;
     text-shadow: 0 4px 10px rgba(0,0,0,0.5);
@@ -145,6 +145,16 @@ h1 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 0px;
+}
+
+.main-title {
+    text-align: center;
+    padding: 15px;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--accent-yellow);
+    font-size: 1.6rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .score-board p {

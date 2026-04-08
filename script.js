@@ -72,7 +72,10 @@ function init() {
 // Format numbers nicely
 function formatNumber(num, exactDecimal = false) {
     if (num < 1000) {
-        if (exactDecimal && num % 1 !== 0) return num.toFixed(1);
+        if (exactDecimal) {
+            const val = Math.floor(num * 10) / 10;
+            return val % 1 === 0 ? val.toString() : val.toFixed(1);
+        }
         return Math.floor(num).toString();
     }
     if (num < 1000000) return (num / 1000).toFixed(1) + 'K';
@@ -82,7 +85,7 @@ function formatNumber(num, exactDecimal = false) {
 
 // Update UI
 function updateDisplay() {
-    scoreElement.innerText = formatNumber(state.score);
+    scoreElement.innerText = formatNumber(state.score, true);
     wpsElement.innerText = formatNumber(state.wps, true);
     
     // Update store buttons enabled/disabled state
@@ -231,3 +234,14 @@ function loadGame() {
 
 // Start
 init();
+
+// Reset Logic
+const resetBtn = document.getElementById('resetBtn');
+if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+        if (confirm("Are you sure you want to reset your entire Whopper empire? This cannot be undone!")) {
+            localStorage.removeItem('whopperClickerSave');
+            location.reload();
+        }
+    });
+}
