@@ -237,11 +237,28 @@ init();
 
 // Reset Logic
 const resetBtn = document.getElementById('resetBtn');
-if (resetBtn) {
+const resetModal = document.getElementById('resetModal');
+const confirmReset = document.getElementById('confirmReset');
+const cancelReset = document.getElementById('cancelReset');
+
+if (resetBtn && resetModal) {
     resetBtn.addEventListener('click', () => {
-        if (confirm("Are you sure you want to reset your entire Whopper empire? This cannot be undone!")) {
-            localStorage.removeItem('whopperClickerSave');
-            location.reload();
+        resetModal.classList.add('show');
+    });
+
+    cancelReset.addEventListener('click', () => {
+        resetModal.classList.remove('show');
+    });
+
+    confirmReset.addEventListener('click', () => {
+        localStorage.removeItem('whopperClickerSave');
+        location.reload();
+    });
+    
+    // Close modal if clicked outside
+    window.addEventListener('click', (e) => {
+        if (e.target === resetModal) {
+            resetModal.classList.remove('show');
         }
     });
 }
