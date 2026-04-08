@@ -1,0 +1,267 @@
+:root {
+    --bg-color: #121212;
+    --panel-bg: rgba(255, 255, 255, 0.05);
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-red: #ff3b3b;
+    --accent-orange: #ff9800;
+    --accent-yellow: #ffeb3b;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --font-main: 'Outfit', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none; /* Prevent text selection while clicking rapidly */
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    overflow: hidden; /* Prevent scrolling, typical for web clickers */
+    height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* MAIN GAME AREA */
+.game-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: radial-gradient(circle at center, #2a2a2a 0%, #121212 100%);
+}
+
+.score-board {
+    position: absolute;
+    top: 5vh;
+    text-align: center;
+    z-index: 10;
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0px;
+}
+
+.score-board p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.wps {
+    margin-top: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--border-color);
+}
+
+.burger-container {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Pulsing effect in background */
+.burger-container::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 152, 0, 0.2) 0%, transparent 70%);
+    z-index: -1;
+    border-radius: 50%;
+    animation: pulse 3s infinite ease-in-out;
+}
+
+.burger-image {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
+    transition: transform 0.05s ease;
+}
+
+.burger-image:active {
+    transform: scale(0.95);
+}
+
+/* Click Particle Effect */
+.click-particle {
+    position: absolute;
+    color: var(--accent-yellow);
+    font-weight: bold;
+    font-size: 1.5rem;
+    pointer-events: none;
+    animation: floatUp 1s ease-out forwards;
+    z-index: 20;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+/* UPGRADES SIDEBAR */
+.store-sidebar {
+    width: 350px;
+    background: rgba(0, 0, 0, 0.8);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+}
+
+.store-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.store-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.upgrades-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+/* Custom Scrollbar */
+.upgrades-list::-webkit-scrollbar {
+    width: 8px;
+}
+.upgrades-list::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.2);
+}
+.upgrades-list::-webkit-scrollbar-thumb {
+    background: var(--text-secondary);
+    border-radius: 4px;
+}
+
+.upgrade-item {
+    display: flex;
+    align-items: center;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.upgrade-item:hover:not(.disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-orange);
+    transform: translateY(-2px);
+}
+
+.upgrade-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
+
+.upgrade-icon {
+    font-size: 2.5rem;
+    margin-right: 15px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.upgrade-info {
+    flex: 1;
+}
+
+.upgrade-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.upgrade-cost {
+    color: var(--accent-red);
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.upgrade-desc {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+.upgrade-count {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--text-secondary);
+    opacity: 0.3;
+}
+
+/* Animations */
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.9); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(0.9); opacity: 0.5; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+    .store-sidebar {
+        width: 100%;
+        height: 50vh; /* Bottom half on mobile */
+        border-left: none;
+        border-top: 1px solid var(--border-color);
+    }
+    .game-area {
+        height: 50vh;
+    }
+    h1 {
+        font-size: 3rem;
+    }
+    .burger-container {
+        width: 200px;
+        height: 200px;
+    }
+    .score-board {
+        top: 2vh;
+    }
+}
