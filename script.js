@@ -70,8 +70,11 @@ function init() {
 }
 
 // Format numbers nicely
-function formatNumber(num) {
-    if (num < 1000) return Math.floor(num).toString();
+function formatNumber(num, exactDecimal = false) {
+    if (num < 1000) {
+        if (exactDecimal && num % 1 !== 0) return num.toFixed(1);
+        return Math.floor(num).toString();
+    }
     if (num < 1000000) return (num / 1000).toFixed(1) + 'K';
     if (num < 1000000000) return (num / 1000000).toFixed(2) + 'M';
     return (num / 1000000000).toFixed(2) + 'B';
@@ -80,7 +83,7 @@ function formatNumber(num) {
 // Update UI
 function updateDisplay() {
     scoreElement.innerText = formatNumber(state.score);
-    wpsElement.innerText = formatNumber(state.wps);
+    wpsElement.innerText = formatNumber(state.wps, true);
     
     // Update store buttons enabled/disabled state
     state.upgrades.forEach(upg => {
